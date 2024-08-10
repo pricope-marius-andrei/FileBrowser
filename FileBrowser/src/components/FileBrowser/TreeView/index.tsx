@@ -1,15 +1,13 @@
 import { Folder } from "./Folder"
 import { File } from "./File";
-import { useContext } from "react";
-import { FileBrowserContext } from "../../../contexts/fileBrowserContext";
-
 export const TreeView = () => {
-    const {initialDataFileBrowserContext} = useContext(FileBrowserContext);
+    const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
+    const fileBrowserData = localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData) : null;
   return (
     <>
         <div className="flex items-start flex-col">
             {
-                initialDataFileBrowserContext.map((treeViewElement:any) => 
+                fileBrowserData.map((treeViewElement:any) => 
                     treeViewElement.kind === "folder" ? <Folder path={treeViewElement.path} name={treeViewElement.name} items={treeViewElement.items}/> : <File path={treeViewElement.path} name={treeViewElement.name}/>  
                 )
             }
