@@ -1,14 +1,12 @@
 import { DisclosurePanel } from "@headlessui/react"
-import { readFileContent } from "../../../../utils/fileOperations"
+import { useContext } from "react";
+import { FileBrowserContext } from "../../../../contexts/fileBrowserContext";
 
 export const File = ({name, path}:any) => {
 
-    // const getFileContent = async () => {
-    //     const content = await readFileContent(path);
-    //     console.log(content);
-    // }
+    const {setActivePath} = useContext(FileBrowserContext);
   return (
-    <DisclosurePanel onClick={()=>{}} className="ml-2 cursor-pointer">
+    <DisclosurePanel onClick={()=>{setActivePath(path)}} className="ml-2 cursor-pointer">
         📄{name}
     </DisclosurePanel>
   )

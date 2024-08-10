@@ -7,6 +7,7 @@
             {"name":"folder1", "path": "src/data/public/folder1", "items": [{"name":"payload2",  "path":"src/data/public/folder1/payload2", "kind":"file", "type": "JSON"}], "kind":"folder"},
             {"name":"poezii", "path": "src/data/public/poezii.txt", "kind":"file", "type": "TXT"}
         ],
+        "path": "src/data/public",
         "kind": "folder"
     },
     {
@@ -14,6 +15,7 @@
         "items": [
             
         ],
+        "path": "src/data/src",
         "kind": "folder"
     },
     {
@@ -21,6 +23,7 @@
         "items": [
             
         ],
+        "path": "src/data/server",
         "kind": "folder"
     }
 ]
