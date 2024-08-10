@@ -7,7 +7,10 @@ import { ViewItem } from '../ViewItem'
 
 export const FileBrowser = () => {
     const [activePath, setActivePath] = useState("");
-    localStorage.setItem("fileBrowserData", JSON.stringify(data));
+    if(localStorage.getItem("fileBrowserData") === null)
+    {
+        localStorage.setItem("fileBrowserData", JSON.stringify(data));
+    }
     
     useEffect(()=>{
     // const getFileContent = async () => {

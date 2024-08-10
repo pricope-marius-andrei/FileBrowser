@@ -5,10 +5,12 @@ import { FileBrowserContext } from "../../../../contexts/fileBrowserContext"
 export const Folder = ({name, path, items}:any) => {
 
     const {setActivePath} = useContext(FileBrowserContext);
+    const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
+    const fileBrowserData = localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData) : null;
 
-return (
+    return (
     <Disclosure>
-        <DisclosureButton onClick={()=>(setActivePath(path))}>📁{name}</DisclosureButton>
+        <DisclosureButton onClick={()=>{setActivePath(path); }}>📁{name}</DisclosureButton>
         {
             items.map((element:any) => 
             {
