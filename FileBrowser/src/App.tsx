@@ -1,9 +1,11 @@
 import './App.css'
+import { FileBrowser } from './components/FileBrowser'
 
 function App() {
+
   return (
     <>
-      <h1 className='flex justify-center items-center'>Title</h1>
+      <FileBrowser/>
     </>
   )
 }
