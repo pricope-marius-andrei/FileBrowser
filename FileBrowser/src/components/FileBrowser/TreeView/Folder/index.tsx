@@ -2,15 +2,17 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react
 import { File } from "../File"
 import { useContext } from "react"
 import { FileBrowserContext } from "../../../../contexts/fileBrowserContext"
+import { getActiveItem } from "../../../../utils/treeNavigation"
 export const Folder = ({name, path, items}:any) => {
 
-    const {setActivePath} = useContext(FileBrowserContext);
+    const {setActivePath, setCurrentItem} = useContext(FileBrowserContext);
     const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
     const fileBrowserData = localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData) : null;
+    
 
     return (
     <Disclosure>
-        <DisclosureButton onClick={()=>{setActivePath(path); }}>📁{name}</DisclosureButton>
+        <DisclosureButton onClick={()=>{setActivePath(path); setCurrentItem(getActiveItem(fileBrowserData,path))}}>📁{name}</DisclosureButton>
         {
             items.map((element:any) => 
             {
