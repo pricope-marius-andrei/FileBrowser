@@ -5,7 +5,7 @@
         "items": [
             {"name":"payload",  "path":"src/data/public/payload.json", "kind":"file", "type": "JSON"},
             {"name":"folder1", "path": "src/data/public/folder1", "items": [{"name":"payload2",  "path":"src/data/public/folder1/payload2", "kind":"file", "type": "JSON"}], "kind":"folder"},
-            {"name":"poezii", "path": "src/data/public/poezii.txt", "kind":"file", "type": "TXT"}
+            {"name":"poezii", "path": "src/data/public/poezii.txt", "kind":"file", "type": "TXT", "content": "some poezie : Lorem ipsum dolor sit amet, consectetur adipiscing elit" }
         ],
         "path": "src/data/public",
         "kind": "folder"
