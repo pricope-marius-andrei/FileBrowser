@@ -14,6 +14,7 @@ const fileBrowserSlice = createSlice({
     reducers: {
         addItem: (state, action: PayloadAction<{ activePath: string, newItem: FileItem | FolderItem }>) => {
             const { activePath, newItem } = action.payload;
+        
             const activeItem = getActiveItem(state, activePath);
             
             if (activeItem) {
@@ -32,7 +33,6 @@ const fileBrowserSlice = createSlice({
                 const folder = activeItem as FileItem;
 
                 folder.content = newContent;
-                console.log(folder);
                 localStorage.setItem("fileBrowserData", JSON.stringify(state));
             }
         }
