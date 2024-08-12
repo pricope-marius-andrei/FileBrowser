@@ -23,10 +23,23 @@ const fileBrowserSlice = createSlice({
                 localStorage.setItem("fileBrowserData", JSON.stringify(state));
             }
         },
+        updateItem: (state, action: PayloadAction<{ activePath: string, newContent: string }>) => {
+            const {activePath, newContent} = action.payload;
+            const activeItem = getActiveItem(state,activePath);
+
+            if(activeItem) 
+            {
+                const folder = activeItem as FileItem;
+
+                folder.content = newContent;
+                console.log(folder);
+                localStorage.setItem("fileBrowserData", JSON.stringify(state));
+            }
+        }
     },
 });
 
 
-export const { addItem } = fileBrowserSlice.actions;
+export const { addItem, updateItem } = fileBrowserSlice.actions;
 
 export default fileBrowserSlice.reducer;

@@ -1,7 +1,5 @@
 import { useContext, useEffect } from 'react'
 import { FileBrowserContext } from '../../../contexts/fileBrowserContext'
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../state/store';
 import { TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { StylesTab } from './StyledTab';
 import { ViewPanel } from './ViewPanel';
@@ -29,8 +27,8 @@ export const ViewItem = () => {
             {
               currentItem.kind === "file" &&
               <TabPanels className="">
-                <ViewPanel content={currentItem?.content}/>
-                <EditorPanel content={currentItem?.content}/>
+                <ViewPanel/>
+                <EditorPanel/>
               </TabPanels>
             }
           </TabGroup>
