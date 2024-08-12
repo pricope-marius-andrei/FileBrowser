@@ -13,10 +13,10 @@ export const TreeView = () => {
     const fileBrowserData = useSelector((state:RootState) => state.fileBrowser);
     const {activePath} = useContext(FileBrowserContext);
 
-    // if(localStorage.getItem("fileBrowserData") === null)
-    // {
-    //     localStorage.setItem("fileBrowserData", JSON.stringify(data));
-    // }
+    if(localStorage.getItem("fileBrowserData") === null)
+    {
+        localStorage.setItem("fileBrowserData", JSON.stringify(data));
+    }
   return (
         <div className="flex w-52 overflow-auto items-start flex-col p-5">
             {
