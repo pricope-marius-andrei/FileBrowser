@@ -8,6 +8,7 @@ import { RootState } from "../../../../state/store";
 export const File = ({name, path}:any) => {
 
     const {setActivePath, setCurrentItem} = useContext(FileBrowserContext);
+
     const reduxFileBrowserData = useSelector((state:RootState) => state.fileBrowser);
 
     const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");

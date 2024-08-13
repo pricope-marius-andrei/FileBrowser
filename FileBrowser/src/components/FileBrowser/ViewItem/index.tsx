@@ -1,12 +1,13 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { FileBrowserContext } from '../../../contexts/fileBrowserContext'
-import { TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import { TabGroup, TabList, TabPanels } from '@headlessui/react';
 import { StylesTab } from './StyledTab';
 import { ViewPanel } from './ViewPanel';
 import { EditorPanel } from './EditorPanel';
 
 export const ViewItem = () => {
     const {activePath, currentItem} = useContext(FileBrowserContext);
+    const currentItemKind = currentItem?.kind;
 
   return (
     <div className='flex h-screen grow p-5'>
@@ -17,7 +18,7 @@ export const ViewItem = () => {
                   {activePath}
               </h1>
               {
-                currentItem.kind === "file" &&
+                currentItemKind === "file" &&
                 <TabList className="self-end bg-slate-600 rounded-xl">
                   <StylesTab>View</StylesTab>
                   <StylesTab>Editor</StylesTab>
@@ -25,10 +26,14 @@ export const ViewItem = () => {
               }
             </div>
             {
-              currentItem.kind === "file" &&
-              <TabPanels className="">
-                <ViewPanel/>
-                <EditorPanel/>
+              currentItemKind === "file" ?
+              <TabPanels>
+                <ViewPanel kind={currentItemKind}/>
+                <EditorPanel/>   
+              </TabPanels>
+              :
+              <TabPanels>
+                <ViewPanel kind={currentItemKind}/> 
               </TabPanels>
             }
           </TabGroup>

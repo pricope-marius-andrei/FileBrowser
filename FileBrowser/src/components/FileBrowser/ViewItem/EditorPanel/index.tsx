@@ -1,4 +1,4 @@
-import { Button, Description, Dialog, DialogBackdrop, DialogPanel, DialogTitle, TabPanel, Textarea } from "@headlessui/react"
+import { TabPanel, Textarea } from "@headlessui/react"
 import { useContext, useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { updateItem } from "../../../../state/fileBrowserSlice";
@@ -36,12 +36,30 @@ export const EditorPanel = () => {
   return (
     <>
       {!isSaved && <p>The file was modified</p>}
-      <TabPanel className="flex grow">
-          <Textarea 
-          onBlur={()=>{
-              if(!isSaved)
-              setDialogIsOpen(true);
-            }} autoFocus={true} onChange={(textarea)=> setEditorValue(textarea.target.value)} value={editorValue} className="p-2 m-10 h-48 grow bg-slate-800"></Textarea>
+        <TabPanel className="flex grow">
+        {
+          // currentItem.type === "TXT" &&
+            <Textarea 
+              onBlur={()=>{
+                if(!isSaved)
+                setDialogIsOpen(true);
+              }} 
+              autoFocus={true} 
+              onChange={(textarea)=> setEditorValue(textarea.target.value)}
+              value={editorValue}
+              className="p-2 m-10 h-48 grow bg-slate-800"/>
+              // :
+              // <div onBlur={()=>{
+              //   if(!isSaved)
+              //   setDialogIsOpen(true);
+              // }}>
+              //   <JsonEditor
+              //     data={ editorValue }
+              //     setData={ setEditorValue }
+              //     on
+              //   />
+              // </div>
+        }
       </TabPanel>
      <SaveChangesDialog 
         dialogIsOpen={dialogIsOpen} 
