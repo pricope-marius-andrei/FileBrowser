@@ -35,11 +35,26 @@ const fileBrowserSlice = createSlice({
                 folder.content = newContent;
                 localStorage.setItem("fileBrowserData", JSON.stringify(state));
             }
+        },
+        deleteItem: (state, action: PayloadAction<{ path: string }>) => {
+            const {path} = action.payload;
+            console.log(path, typeof path);
+            const activeItem = getActiveItem(state,path);
+            
+            if(activeItem) 
+            {
+                const parentPath = path.split('/').slice(0,-1).join('/');
+                console.log(parentPath);
+                const parentItem = getActiveItem(state,parentPath) as FolderItem;
+
+                parentItem.items = parentItem.items.filter(item => item.path !== path);
+                localStorage.setItem("fileBrowserData", JSON.stringify(state));
+            }
         }
     },
 });
 
 
-export const { addItem, updateItem } = fileBrowserSlice.actions;
+export const { addItem, updateItem, deleteItem } = fileBrowserSlice.actions;
 
 export default fileBrowserSlice.reducer;
