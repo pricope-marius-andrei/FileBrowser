@@ -1,13 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'
 
-export default function NewFileModal({isOpen, setIsOpen}) {
+export default function NewFolderModal({isOpen, setIsOpen}) {
   const dispatch = useDispatch();
   const {activePath} = useContext(FileBrowserContext);
-  const [newFileName, setNewFileName] = useState('');
-  const [newFileType, setNewFileType] = useState('TXT');
-  function handleCreateNewFile() {
-    dispatch(addItem({ activePath , newItem: { name: newFileName.trim(), path: activePath + '/' + newFileName, kind: "file", type: newFileType } }))
+  const [newFolderName, setNewFolderName] = useState('');
+  function handleCreateNewFolder() {
+    dispatch(addItem({ activePath , newItem: { name: newFolderName.trim(), path: activePath + '/' + newFolderName, kind: "folder", items:[] } }))
 
     setIsOpen(false)
   }
@@ -45,18 +44,17 @@ export default function NewFileModal({isOpen, setIsOpen}) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Add a file to {activePath} folder
+                    Craete a folder in {activePath} folder
                   </Dialog.Title>
-                  <SelectNewFileType newFileType={newFileType} setNewFileType={setNewFileType} />
-                  <NameInput newFileName={newFileName} setNewFileName={setNewFileName}/>
+                  <NameInput newFolderName={newFolderName} setNewFolderName={setNewFolderName}/>
                   <div className="mt-4">
                     <button
-                    disabled={newFileName.trim() === ''}
+                    disabled={newFolderName.trim() === ''}
                       type="button"
-                      className={`inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2  ${newFileName.trim() === '' ? 'cursor-not-allowed ' : ''}`}
-                      onClick={handleCreateNewFile}
+                      className={`inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2  ${newFolderName.trim() === '' ? 'cursor-not-allowed ' : ''}`}
+                      onClick={handleCreateNewFolder}
                     >
-                      Create New File!
+                      Create New Folder!
                     </button>
                   </div>
                 </Dialog.Panel>
@@ -68,52 +66,21 @@ export default function NewFileModal({isOpen, setIsOpen}) {
   )
 }
 
-
-import { Radio, RadioGroup } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
-
-const types = ['TXT','JSON']
-
-function SelectNewFileType({newFileType, setNewFileType}) {
-  return (
-    <div className="w-full px-4">
-      <div className="mx-auto w-full max-w-md">
-        <RadioGroup  value={newFileType} onChange={setNewFileType} aria-label="Server size" className="space-y-2">
-          {types.map((type) => (
-            <Radio
-              key={type}
-              value={type}
-              className="group relative flex cursor-pointer rounded-lg bg-white/5 py-4 px-5 text-white shadow-md transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-white/10"
-            >
-              <div className="flex w-full items-center justify-between">
-                <div className="text-sm/6">
-                  <p className="font-semibold text-black">{type}</p>
-                </div>
-                <CheckCircleIcon className="size-6 fill-green-400 opacity-0 transition group-data-[checked]:opacity-100" />
-              </div>
-            </Radio>
-          ))}
-        </RadioGroup>
-      </div>
-    </div>
-  )
-}
-
 import { Description, Field, Input, Label } from '@headlessui/react'
 import clsx from 'clsx'
 import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../../../state/fileBrowserSlice';
 
-function NameInput({newFileName, setNewFileName}) {
+function NameInput({newFolderName, setNewFolderName}) {
   const handleInputChange = (event) => {
-    setNewFileName(event.target.value);
+    setNewFolderName(event.target.value);
   };
 
   return (
     <div className="w-full max-w-md px-4">
       <Field>
-        <Label className="text-sm/6 font-medium text-white">File Name</Label>
+        <Label className="text-sm/6 font-medium text-white">Folder Name</Label>
         {/* <Description className="text-sm/6 text-black/50"></Description> */}
         <Input
 
@@ -121,7 +88,7 @@ function NameInput({newFileName, setNewFileName}) {
             'mt-3 block w-full rounded-lg border border-stone-100  py-1.5 px-3 text-sm/6 text-black/75',
             'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-black/25'
           )}
-          value={newFileName} 
+          value={newFolderName} 
           onChange={handleInputChange}
         />
       </Field>
