@@ -4,7 +4,10 @@
         "name" : "public",
         "items": [
             {"name":"payload",  "path":"src/data/public/payload", "kind":"file", "type": "JSON"},
-            {"name":"folder1", "path": "src/data/public/folder1", "items": [{"name":"payload2",  "path":"src/data/public/folder1/payload2", "kind":"file", "type": "JSON"}], "kind":"folder"},
+            {"name":"folder1", "path": "src/data/public/folder1", "items": [
+                {"name":"payload2",  "path":"src/data/public/folder1/payload2", "kind":"file", "type": "JSON"},
+                {"name":"folder3", "path": "src/data/public/folder1/folder3", "items": [{"name":"payload3",  "path":"src/data/public/folder1/folder3/payload3", "kind":"file", "type": "JSON"}], "kind":"folder"}
+            ], "kind":"folder"},
             {"name":"poezii", "path": "src/data/public/poezii", "kind":"file", "type": "TXT", "content": "some poezie : Lorem ipsum dolor sit amet, consectetur adipiscing elit" }
         ],
         "path": "src/data/public",
