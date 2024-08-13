@@ -7,14 +7,14 @@ import { RootState } from "../../../../state/store";
 
 export const File = ({name, path}:any) => {
 
-    const {activePath, setActivePath, setCurrentItem} = useContext(FileBrowserContext);
+    const {setActivePath, setCurrentItem} = useContext(FileBrowserContext);
     const reduxFileBrowserData = useSelector((state:RootState) => state.fileBrowser);
 
     const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
     const fileBrowserData = localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData) : reduxFileBrowserData;
 
   return (
-    <DisclosurePanel onClick={()=>{setActivePath(path), setCurrentItem(getActiveItem(fileBrowserData, path))}} className="ml-2 cursor-pointer">
+    <DisclosurePanel onClick={()=>{setActivePath(path); setCurrentItem(getActiveItem(fileBrowserData, path))}} className="ml-2 cursor-pointer">
         📄{name}
     </DisclosurePanel>
   )
