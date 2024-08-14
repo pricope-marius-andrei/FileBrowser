@@ -3,17 +3,31 @@ import { Fragment, useContext, useState } from 'react'
 
 export default function NewFileModal({isOpen, setIsOpen}) {
   const dispatch = useDispatch();
-  const {activePath} = useContext(FileBrowserContext);
+  const {activePath,setActivePath} = useContext(FileBrowserContext);
   const [newFileName, setNewFileName] = useState('');
   const [newFileType, setNewFileType] = useState('TXT');
-  function handleCreateNewFile() {
-    dispatch(addItem({ activePath , newItem: { name: newFileName.trim(), path: activePath + '/' + newFileName, kind: "file", type: newFileType } }))
+  const [uploadedFile, setUploadedFile] = useState(null);
 
-    setIsOpen(false)
-  }
-  function closeModal() {
-    setIsOpen(false)
-  }
+function handleCreateNewFile() {
+  uploadedFile && localStorage.setItem(activePath + '/' + newFileName, uploadedFile);
+
+  dispatch(addItem({ 
+    activePath, 
+    newItem: { 
+      name: newFileName.trim(), 
+      path: activePath + '/' + newFileName, 
+      kind: "file", 
+      type: newFileType 
+    } 
+  }));
+    setActivePath(activePath+'/'+newFileName);
+    setIsOpen(false);
+}
+
+function closeModal() {
+  setIsOpen(false);
+}
+
   return (
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -47,7 +61,7 @@ export default function NewFileModal({isOpen, setIsOpen}) {
                   >
                     Add a file to {activePath} folder
                   </DialogTitle>
-                  <SelectNewFileType newFileType={newFileType} setNewFileType={setNewFileType} />
+                  <SelectNewFileType newFileType={newFileType} setNewFileType={setNewFileType} setUploadedFile={setUploadedFile}/>
                   <NameInput newFileName={newFileName} setNewFileName={setNewFileName}/>
                   <div className="mt-4">
                     <button
@@ -72,15 +86,21 @@ export default function NewFileModal({isOpen, setIsOpen}) {
 import { Radio, RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
-const types = ['TXT','JSON']
+const types = ['TXT','JSON', 'PNG']
 
-function SelectNewFileType({newFileType, setNewFileType}) {
+function SelectNewFileType({ newFileType, setNewFileType, setUploadedFile }) {
+
   return (
     <div className="w-full px-4">
       <div className="mx-auto w-full max-w-md">
-        <RadioGroup  value={newFileType} onChange={setNewFileType} aria-label="Server size" className="space-y-2">
+        <RadioGroup
+          value={newFileType}
+          onChange={setNewFileType}
+          aria-label="Select file type"
+          className="space-y-2"
+        >
           {types.map((type) => (
-            <Radio
+            <RadioGroup.Option
               key={type}
               value={type}
               className="group relative flex cursor-pointer rounded-lg bg-white/5 py-4 px-5 text-white shadow-md transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-white/10"
@@ -89,14 +109,15 @@ function SelectNewFileType({newFileType, setNewFileType}) {
                 <div className="text-sm/6">
                   <p className="font-semibold text-black">{type}</p>
                 </div>
+                {newFileType === "PNG" && type === "PNG" && (<UploadImageInput setUploadedFile={setUploadedFile}/> )}
                 <CheckCircleIcon className="size-6 fill-green-400 opacity-0 transition group-data-[checked]:opacity-100" />
               </div>
-            </Radio>
+            </RadioGroup.Option>
           ))}
         </RadioGroup>
       </div>
     </div>
-  )
+  );
 }
 
 import { Description, Field, Input, Label } from '@headlessui/react'
@@ -113,18 +134,43 @@ function NameInput({newFileName, setNewFileName}) {
   return (
     <div className="w-full max-w-md px-4">
       <Field>
-        <Label className="text-sm/6 font-medium text-white">File Name</Label>
         {/* <Description className="text-sm/6 text-black/50"></Description> */}
         <Input
-
           className={clsx(
             'mt-3 block w-full rounded-lg border border-stone-100  py-1.5 px-3 text-sm/6 text-black/75',
             'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-black/25'
           )}
+          placeholder='Type file name'
           value={newFileName} 
           onChange={handleInputChange}
         />
       </Field>
     </div>
   )
+}
+
+
+function UploadImageInput({ setUploadedFile }) {
+  function handleFileUpload(event) {
+    const file = event.target.files[0]; 
+
+    if (file) {
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        const base64Image = reader.result;
+        setUploadedFile(base64Image); 
+      };
+
+      reader.readAsDataURL(file); 
+    }
+  }
+
+  return (
+    <input
+      type="file"
+      onChange={handleFileUpload}
+      className="block ml-4 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-blue-700 hover:file:bg-blue-100"
+    />
+  );
 }

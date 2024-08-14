@@ -19,12 +19,12 @@ export default function ActionsPopover({setShowActionsPopover , path}:any) {
   return (
     <Popover
            onMouseEnter={() => setShowActionsPopover(true)}
-           onMouseLeave={() => setShowActionsPopover(false)}
+          // onMouseLeave={() => {console.log('here');setShowActionsPopover(false)}}
            className="absolute flex flex-col -translate-x-full -translate-y-2/3 gap-1"
          >
            <Popover.Panel
              static
-             className="relative z-10 text-sm text-black bg-white rounded hover:scale-110"
+             className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>{setShowNewFileModal(true); setActivePath(path)}}
            >
                 ➕📄
@@ -33,7 +33,7 @@ export default function ActionsPopover({setShowActionsPopover , path}:any) {
 
            <Popover.Panel
              static
-             className="relative z-10 text-sm text-black bg-white rounded hover:scale-110"
+             className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>{setShowNewFolderModal(true); setActivePath(path)}}
            >
                 ➕📁
@@ -42,7 +42,7 @@ export default function ActionsPopover({setShowActionsPopover , path}:any) {
          
            <Popover.Panel
              static
-             className="relative z-10 text-sm text-black bg-white rounded hover:scale-110"
+             className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>handleDeleteFolder()}
            >
             ➜🗑️

@@ -3,11 +3,11 @@ import { Fragment, useContext, useState } from 'react'
 
 export default function NewFolderModal({isOpen, setIsOpen}) {
   const dispatch = useDispatch();
-  const {activePath} = useContext(FileBrowserContext);
+  const {activePath,setActivePath} = useContext(FileBrowserContext);
   const [newFolderName, setNewFolderName] = useState('');
   function handleCreateNewFolder() {
     dispatch(addItem({ activePath , newItem: { name: newFolderName.trim(), path: activePath + '/' + newFolderName, kind: "folder", items:[] } }))
-
+    setActivePath(activePath+'/'+newFolderName);
     setIsOpen(false)
   }
   function closeModal() {
@@ -80,14 +80,14 @@ function NameInput({newFolderName, setNewFolderName}) {
   return (
     <div className="w-full max-w-md px-4">
       <Field>
-        <Label className="text-sm/6 font-medium text-white">Folder Name</Label>
         {/* <Description className="text-sm/6 text-black/50"></Description> */}
         <Input
 
           className={clsx(
-            'mt-3 block w-full rounded-lg border border-stone-100  py-1.5 px-3 text-sm/6 text-black/75',
+            'mt-4 block w-full rounded-lg border border-stone-100  py-1.5 px-3 text-sm/6 text-black/75',
             'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-black/25'
           )}
+          placeholder='Type folder name'
           value={newFolderName} 
           onChange={handleInputChange}
         />

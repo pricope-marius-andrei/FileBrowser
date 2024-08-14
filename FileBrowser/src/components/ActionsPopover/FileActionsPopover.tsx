@@ -6,12 +6,15 @@ import { deleteItem } from '../../state/fileBrowserSlice';
 
 export default function FileActionsPopover({setShowActionsPopover , path}:any) {
   const dispatch = useDispatch();
-  const {setActivePath} = useContext(FileBrowserContext);
+  const {setActivePath, currentItem} = useContext(FileBrowserContext);
 
   const handleDeleteFile = () => {
     setActivePath(path.split("/").slice(0, -1).join("/"))
     setShowActionsPopover(false);
     dispatch(deleteItem({path}));
+
+    if(currentItem.type === 'PNG')
+      localStorage.removeItem(currentItem.path);
   }
   
   return (
