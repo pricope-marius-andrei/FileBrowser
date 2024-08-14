@@ -5,9 +5,9 @@ import { ViewItem } from './ViewItem'
 import { getActiveItem } from '../../utils/treeNavigation'
 
 export const FileBrowser = () => {
-    const [activePath, setActivePath] = useState('src/data/public');
+    const [activePath, setActivePath] = useState('root/public');
     const [currentItem, setCurrentItem] = useState({});
-    const [currentItemRef,setCurrentItemRef] = useState(null);
+
 
     useEffect(() => {
       const fileBrowserData = JSON.parse(localStorage.getItem("fileBrowserData"));
@@ -17,8 +17,10 @@ export const FileBrowser = () => {
   return (
     <>
         <div className='flex bg-slate-800 font-normal text-white'>
-            <FileBrowserContext.Provider value={{activePath, setActivePath, currentItem, setCurrentItem, currentItemRef,setCurrentItemRef}}>
-                <TreeView/>
+            <FileBrowserContext.Provider value={{activePath, setActivePath, currentItem, setCurrentItem}}>
+                <div id='treeViewRoot' className='relative'>
+                  <TreeView/>
+                </div>
                 <ViewItem/>
             </FileBrowserContext.Provider>
         </div>

@@ -1,30 +1,27 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react';
 import { FileSystemItem, FolderItem } from '../../../../types/FileBrowserTypes'
+import { openPath } from '../../../../utils/treeNavigation';
 import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 
 interface FolderHierachyTableProps {
     data: FolderItem[] | null;
 } 
+  
 
 export const FolderHierachyTable = ({data}:FolderHierachyTableProps) => {
 
-    const {setActivePath, setCurrentItem, currentItemRef} = useContext(FileBrowserContext);
-    const [clickedItem, setClickedItem] = useState(false);
+    const {setActivePath, setCurrentItem, } = useContext(FileBrowserContext);
    
-
     const handleOpenItem = (item:FileSystemItem) => {
-        setActivePath(item.path);
-        setCurrentItem(item);
-        setClickedItem(true);
-    }
-
-
-    useEffect(() => {
-        if(clickedItem) {
-            currentItemRef?.current.click();
-            setClickedItem(false);
+        if(item.kind === "folder") {
+            const path : string = item.path;
+            openPath(path); 
         }
-    }, [currentItemRef]);
+        else {
+            setActivePath(item.path);
+            setCurrentItem(item);
+        }
+    }
     
   return (
     <div className='flex flex-col grow rounded-lg border-white border-[1px]'>
