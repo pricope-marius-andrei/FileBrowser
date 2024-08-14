@@ -2,7 +2,7 @@ import { FileBrowserContext } from '../../contexts/fileBrowserContext'
 import { TreeView } from './TreeView'
 import {useEffect, useState } from 'react'
 import { ViewItem } from './ViewItem'
-import { getActiveItem } from '../../utils/treeNavigation'
+import { getActiveItem, openPath } from '../../utils/treeNavigation'
 
 export const FileBrowser = () => {
     const [activePath, setActivePath] = useState('root/public');
@@ -12,6 +12,7 @@ export const FileBrowser = () => {
     useEffect(() => {
       const fileBrowserData = JSON.parse(localStorage.getItem("fileBrowserData"));
         setCurrentItem(getActiveItem(fileBrowserData, activePath));
+        // setActivePath(currentItem.path);
     }, [activePath]);
     
   return (

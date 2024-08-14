@@ -35,7 +35,7 @@ export default function SearchBar({rawData, setFilteredData}:any) {
         else 
         {
             setFilteredData([]);
-            setActivePath('');
+            // setActivePath('');
             setCurrentItem({});
         }
     },[searchQuery])
