@@ -10,8 +10,6 @@ interface ViewPanelProps {
 export const ViewPanel = ({kind}:ViewPanelProps) => {
 
   const {currentItem} = useContext(FileBrowserContext);
-
-
   return (
       <TabPanel className="m-10 p-2">
       {

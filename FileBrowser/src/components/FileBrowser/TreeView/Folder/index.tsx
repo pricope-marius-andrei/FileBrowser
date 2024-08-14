@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { File } from "../File";
 import { FileBrowserContext } from "../../../../contexts/fileBrowserContext";
 import { getActiveItem } from "../../../../utils/treeNavigation";
@@ -8,8 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../state/store";
 
 export const Folder = ({name, path, items }: any) => {
-  const { setActivePath, setCurrentItem, currentItem, setCurrentItemRef } = useContext(FileBrowserContext);
-  const folderRef = useRef(null);
+  const { setActivePath, setCurrentItem } = useContext(FileBrowserContext);
   const reduxFileBrowserData = useSelector((state:RootState) => state.fileBrowser);
   
   const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
@@ -19,21 +18,12 @@ export const Folder = ({name, path, items }: any) => {
 
   const [showActionsPopover, setShowActionsPopover] = useState(false);
 
-
-  useEffect(() => {
-    if(name === currentItem.name && folderRef !== null)
-    {
-      setCurrentItemRef(folderRef);
-    }    
-  }, [currentItem]);
-
   return (
     <Disclosure>
       {({ open }) => (
         <div className="relative">
           <DisclosureButton
             className="flex items-center"
-            ref={folderRef}
             onClick={() => {
               setActivePath(path);
               setCurrentItem(getActiveItem(fileBrowserData, path));

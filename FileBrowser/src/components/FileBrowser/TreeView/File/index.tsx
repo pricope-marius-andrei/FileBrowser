@@ -15,7 +15,7 @@ export const File = ({name, path}:any) => {
     const fileBrowserData = localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData) : reduxFileBrowserData;
 
   return (
-    <DisclosurePanel onClick={()=>{setActivePath(path); setCurrentItem(getActiveItem(fileBrowserData, path))}} className="ml-2 cursor-pointer">
+    <DisclosurePanel onClick={()=>{setActivePath(path); setCurrentItem(getActiveItem(fileBrowserData, path))}} className="cursor-pointer">
         📄{name}
     </DisclosurePanel>
   )

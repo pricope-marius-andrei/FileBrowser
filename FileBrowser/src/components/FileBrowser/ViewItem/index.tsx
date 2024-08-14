@@ -11,7 +11,7 @@ export const ViewItem = () => {
 
   return (
     <div className='flex h-screen grow p-5'>
-        <div className='flex justify-between items-center grow h-28 '>
+        <div className='flex justify-between items-center grow h-28'>
           <TabGroup className="grow h-20" manual>
             <div className='flex justify-between'>
               <h1>
