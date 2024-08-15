@@ -1,10 +1,15 @@
-import { Popover } from '@headlessui/react';
+import { Popover, PopoverPanel } from '@headlessui/react';
 import {  useContext } from "react";
 import { FileBrowserContext } from '../../contexts/fileBrowserContext';
 import { useDispatch } from 'react-redux';
 import { deleteItem } from '../../state/fileBrowserSlice';
 
-export default function FileActionsPopover({setShowActionsPopover , path}:any) {
+interface FileActionsPopoverProps {
+  setShowActionsPopover: (value: boolean) => void;
+  path: string;
+}
+
+export default function FileActionsPopover({setShowActionsPopover , path}:FileActionsPopoverProps) {
   const dispatch = useDispatch();
   const {setActivePath, currentItem} = useContext(FileBrowserContext);
 
@@ -23,14 +28,13 @@ export default function FileActionsPopover({setShowActionsPopover , path}:any) {
            onMouseLeave={() => setShowActionsPopover(false)}
            className="absolute -translate-x-full"
          >
-          {/* mby rename, clone, move file */}
-           <Popover.Panel
+           <PopoverPanel
              static
              className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>handleDeleteFile()}
            >
             ➜🗑️
-           </Popover.Panel>
+           </PopoverPanel>
          </Popover>
   );
 }

@@ -2,21 +2,26 @@ import { Button } from '@headlessui/react';
 import { useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-const Dictaphone = ({searchCallback, filteredData}:any) => {
+interface DictaphoneProps {
+    searchCallback: (item:string) => void;
+}
+
+interface Command {
+    command: string;
+    callback: (item:any) => void;
+}
+
+const Dictaphone = ({searchCallback}:DictaphoneProps) => {
   const [listeningStatus, setListeningStatus] = useState(false);
 
-  const commands = [
+  const commands : readonly Command[]  = [
     {
         command: '(Please) search *',
         callback: (item:any) => searchCallback(item)
-    },
-    {
-        command: '(Please) open * (folder)(file)',
     }
   ];
 
   const {
-    transcript,
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition
@@ -45,7 +50,6 @@ const Dictaphone = ({searchCallback, filteredData}:any) => {
   return (
     <div className='flex items-center'>
       <Button className="h-fit p-2 rounded-full hover:bg-slate-600" onClick={handleListingStatus}>{listening ? '🔴':'🎤'}</Button>
-      <p>{transcript}</p>
     </div>
   );
 };

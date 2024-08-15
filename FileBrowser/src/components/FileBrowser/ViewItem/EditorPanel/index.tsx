@@ -8,11 +8,11 @@ import { SaveChangesDialog } from "../SaveChangesDialog";
 export const EditorPanel = () => {
     const dispatch = useDispatch();
     const {activePath, currentItem, setCurrentItem} = useContext(FileBrowserContext);
-    const currentSavedValue = currentItem?.content;
-    const [editorValue, setEditorValue] = useState(currentItem?.content);
+    const currentSavedValue : string = currentItem?.content;
+    const [editorValue, setEditorValue] = useState<string>(currentItem?.content);
 
-    const [dialogIsOpen, setDialogIsOpen] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
+    const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
 
     useEffect(()=> {
       setEditorValue(currentItem?.content)
@@ -38,7 +38,6 @@ export const EditorPanel = () => {
       {!isSaved && <p>The file was modified</p>}
         <TabPanel className="flex grow">
         {
-          // currentItem.type === "TXT" &&
             <Textarea 
               onBlur={()=>{
                 if(!isSaved)
@@ -48,17 +47,6 @@ export const EditorPanel = () => {
               onChange={(textarea)=> setEditorValue(textarea.target.value)}
               value={editorValue}
               className="p-2 m-10 h-48 grow bg-slate-800"/>
-              // :
-              // <div onBlur={()=>{
-              //   if(!isSaved)
-              //   setDialogIsOpen(true);
-              // }}>
-              //   <JsonEditor
-              //     data={ editorValue }
-              //     setData={ setEditorValue }
-              //     on
-              //   />
-              // </div>
         }
       </TabPanel>
      <SaveChangesDialog 
