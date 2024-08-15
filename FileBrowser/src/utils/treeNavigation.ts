@@ -13,6 +13,7 @@ export const getActiveItem = (fileBrowserData: FolderItem[], activePath: string)
   return currentPathStep.find((obj: FileSystemItem) => obj.name === activeItemName);
 };
 
+
 export const openPath = async (path: string) => {
   const segments = path.split('/').slice(1);
   let currentElement = document.getElementById('treeViewRoot');
@@ -22,12 +23,12 @@ export const openPath = async (path: string) => {
     return;
   }
 
-  let firstButton: any = Array.from(currentElement.querySelectorAll('button'))
-    .find((btn:any) => btn.textContent.includes(segments[0]));
+  const firstButton: HTMLButtonElement | undefined = Array.from(currentElement.querySelectorAll('button'))
+    .find((btn:HTMLButtonElement) => btn.textContent?.includes(segments[0]));
 
 
   if (firstButton && firstButton.getAttribute('data-headlessui-state') === 'open') {
-      await firstButton.click();
+      firstButton.click();
   }
 
 

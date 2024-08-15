@@ -8,8 +8,8 @@ import ViewImage from './ViewImage';
 
 export const ViewItem = () => {
     const { activePath, currentItem } = useContext(FileBrowserContext);
-    const currentItemKind = currentItem?.kind;
-    const currentItemType = currentItem?.type;  
+    const currentItemKind : string = currentItem?.kind;
+    const currentItemType : string = currentItem?.type;  
     
     return (
         <div className='flex h-screen grow p-5'>

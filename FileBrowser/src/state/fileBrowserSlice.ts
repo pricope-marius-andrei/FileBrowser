@@ -15,7 +15,7 @@ const fileBrowserSlice = createSlice({
         addItem: (state, action: PayloadAction<{ activePath: string, newItem: FileItem | FolderItem }>) => {
             const { activePath, newItem } = action.payload;
         
-            const activeItem = getActiveItem(state, activePath);
+            const activeItem = getActiveItem(state as FolderItem[], activePath);
             
             if (activeItem) {
                 const folder = activeItem as FolderItem;
@@ -26,7 +26,7 @@ const fileBrowserSlice = createSlice({
         },
         updateItem: (state, action: PayloadAction<{ activePath: string, newContent: string }>) => {
             const {activePath, newContent} = action.payload;
-            const activeItem = getActiveItem(state,activePath);
+            const activeItem = getActiveItem(state as FolderItem[],activePath);
 
             if(activeItem) 
             {
@@ -39,13 +39,13 @@ const fileBrowserSlice = createSlice({
         deleteItem: (state, action: PayloadAction<{ path: string }>) => {
             const {path} = action.payload;
             console.log(path, typeof path);
-            const activeItem = getActiveItem(state,path);
+            const activeItem = getActiveItem(state as FolderItem[],path);
             
             if(activeItem) 
             {
                 const parentPath = path.split('/').slice(0,-1).join('/');
                 console.log(parentPath);
-                const parentItem = getActiveItem(state,parentPath) as FolderItem;
+                const parentItem = getActiveItem(state as FolderItem[],parentPath) as FolderItem;
 
                 parentItem.items = parentItem.items.filter(item => item.path !== path);
                 localStorage.setItem("fileBrowserData", JSON.stringify(state));

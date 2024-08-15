@@ -1,4 +1,4 @@
-import { Popover } from '@headlessui/react';
+import { Popover, PopoverPanel } from '@headlessui/react';
 import { useContext, useState } from "react";
 import { FileBrowserContext } from '../../contexts/fileBrowserContext';
 import NewFileModal from '../FileBrowser/TreeView/File/NewFileModal';
@@ -27,31 +27,31 @@ export default function ActionsPopover({setShowActionsPopover , path}:ActionsPop
           // onMouseLeave={() => {setShowActionsPopover(false)}}
            className="absolute flex flex-col -translate-x-full -translate-y-2/3 gap-1"
          >
-           <Popover.Panel
+           <PopoverPanel
              static
              className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>{setShowNewFileModal(true); setActivePath(path)}}
            >
                 ➕📄
             <NewFileModal isOpen={showNewFileModal} setIsOpen={setShowNewFileModal}/> 
-           </Popover.Panel>
+           </PopoverPanel>
 
-           <Popover.Panel
+           <PopoverPanel
              static
              className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>{setShowNewFolderModal(true); setActivePath(path)}}
            >
                 ➕📁
             <NewFolderModal isOpen={showNewFolderModal} setIsOpen={setShowNewFolderModal}/> 
-           </Popover.Panel>
+           </PopoverPanel>
          
-           <Popover.Panel
+           <PopoverPanel
              static
              className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
              onClick={()=>handleDeleteFolder()}
            >
             ➜🗑️
-           </Popover.Panel>
+           </PopoverPanel>
          </Popover>
   );
 }

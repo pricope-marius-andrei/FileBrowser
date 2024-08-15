@@ -7,7 +7,6 @@ interface FolderHierachyTableProps {
     data: FolderItem[] | null;
 } 
   
-
 export const FolderHierachyTable = ({data}:FolderHierachyTableProps) => {
 
     const {setActivePath, setCurrentItem, } = useContext(FileBrowserContext);
@@ -27,7 +26,7 @@ export const FolderHierachyTable = ({data}:FolderHierachyTableProps) => {
     <div className='flex flex-col grow rounded-lg border-white border-[1px]'>
         <div className='grid grid-cols-2 rounded-t-lg p-2 bg-gray-900'>
             <div>Name</div>
-            <div>Extention</div>
+            <div>Type</div>
         </div>
         <div className='rounded-b-lg overflow-hidden'>
         {
@@ -36,7 +35,7 @@ export const FolderHierachyTable = ({data}:FolderHierachyTableProps) => {
                     <hr></hr>
                     <div className='bg-gray-800 hover:bg-gray-700 grid grid-cols-2 p-4 cursor-pointer'>
                         <div onClick={() => handleOpenItem(item)} className='hover:underline'>{item.name}</div>
-                        <div>{item.type}</div>
+                        <div>{item.kind}</div>
                     </div>
                 </div>
             )

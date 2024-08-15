@@ -2,16 +2,22 @@ import { Button } from '@headlessui/react';
 import { useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-const Dictaphone = ({searchCallback, filteredData}:any) => {
+interface DictaphoneProps {
+    searchCallback: (item:string) => void;
+}
+
+interface Command {
+    command: string;
+    callback: (item:any) => void;
+}
+
+const Dictaphone = ({searchCallback}:DictaphoneProps) => {
   const [listeningStatus, setListeningStatus] = useState(false);
 
-  const commands = [
+  const commands : readonly Command[]  = [
     {
         command: '(Please) search *',
         callback: (item:any) => searchCallback(item)
-    },
-    {
-        command: '(Please) open * (folder)(file)',
     }
   ];
 

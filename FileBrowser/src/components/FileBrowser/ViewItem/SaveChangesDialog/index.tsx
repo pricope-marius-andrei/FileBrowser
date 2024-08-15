@@ -15,8 +15,8 @@ export const SaveChangesDialog = ({dialogIsOpen, setDialogIsOpen, handleCancelCh
 
     <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
       
-      <DialogPanel className="max-w-lg space-y-4 bg-slate-600 text-white p-20 rounded-xl">
-        <DialogTitle className="text-3xl font-bold text-center">The file was modified</DialogTitle>
+      <DialogPanel className="max-w-lg space-y-4 bg-white text-lg font-medium leading-6 text-gray-900 p-20 rounded-xl">
+        <DialogTitle className="text-3xl text-center">The file was modified</DialogTitle>
         <Description className="text-center">Do you want to save changes?</Description>
         <div className="flex gap-4 justify-center">
           <Button className="bg-slate-800 rounded-xl px-10 py-2 text-white"  onClick={handleSaveChanges}>Save Changes</Button>
