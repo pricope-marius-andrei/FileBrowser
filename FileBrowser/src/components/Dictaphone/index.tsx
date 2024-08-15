@@ -22,7 +22,6 @@ const Dictaphone = ({searchCallback}:DictaphoneProps) => {
   ];
 
   const {
-    transcript,
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition
