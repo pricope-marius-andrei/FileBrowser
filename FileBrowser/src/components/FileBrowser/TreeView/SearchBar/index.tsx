@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react'
-import { FolderItem } from '../../../../types/FileBrowserTypes';
+import { Dispatch, useEffect, useState } from 'react'
+import { FileSystemItem } from '../../../../types/FileBrowserTypes';
 
 import Dictaphone from '../../../Dictaphone';
 
 
-const flattenFileSystem = (data:any) => {
-    let result:any = [];
+const flattenFileSystem = (data:FileSystemItem[]) => {
+    let result:FileSystemItem[] = [];
 
-    data.forEach((item:FolderItem) => {
+    data.forEach((item:FileSystemItem) => {
         if (item.kind === 'folder' && item.items) {
-            result.push({ ...item, isFolder: true });
+            result.push({ ...item });
             result = result.concat(flattenFileSystem(item.items));
         } else {
-            result.push({ ...item, isFolder: false });
+            result.push({ ...item });
         }
     });
 
     return result;
 };
 
-export default function SearchBar({rawData, setFilteredData}:any) {
+export default function SearchBar({rawData, setFilteredData}: {rawData:FileSystemItem[], setFilteredData:Dispatch<React.SetStateAction<FileSystemItem[]>>}) {
     const [searchQuery, setSearchQuery] = useState('');
     const rawFlattenedData = flattenFileSystem(rawData);
    
 
     useEffect(() => {
         if(searchQuery !== '') {
-            const flattenedData = rawFlattenedData.filter((item:any) => 
+            const flattenedData = rawFlattenedData.filter((item:FileSystemItem) => 
                 
                 item.name.toLowerCase().includes(searchQuery.toLowerCase()));             
     
@@ -37,7 +37,7 @@ export default function SearchBar({rawData, setFilteredData}:any) {
     const handleSearch = (query:string) => {
         setSearchQuery(query);
         if(query !== '') {
-            const flattenedData = rawFlattenedData.filter((item:any) => 
+            const flattenedData = rawFlattenedData.filter((item:FileSystemItem) => 
                 
             item.name.toLowerCase().includes(query.toLowerCase()));             
 
@@ -46,8 +46,6 @@ export default function SearchBar({rawData, setFilteredData}:any) {
         else 
         {
             setFilteredData([]);
-            // setActivePath('');
-            // setCurrentItem({});
         }
     }
 

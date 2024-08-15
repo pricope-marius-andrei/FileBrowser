@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useContext, useState } from 'react'
+import { ChangeEvent, Fragment, useContext, useState } from 'react'
 
-export default function NewFolderModal({isOpen, setIsOpen}) {
+export default function NewFolderModal({isOpen, setIsOpen}:{isOpen:boolean, setIsOpen: (value: boolean) => void}) {
   const dispatch = useDispatch();
   const {activePath,setActivePath} = useContext(FileBrowserContext);
   const [newFolderName, setNewFolderName] = useState('');
@@ -66,14 +66,14 @@ export default function NewFolderModal({isOpen, setIsOpen}) {
   )
 }
 
-import { Description, Field, Input, Label } from '@headlessui/react'
+import { Field, Input } from '@headlessui/react'
 import clsx from 'clsx'
 import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../../../state/fileBrowserSlice';
 
-function NameInput({newFolderName, setNewFolderName}) {
-  const handleInputChange = (event) => {
+function NameInput({newFolderName, setNewFolderName}:{newFolderName:string, setNewFolderName: (value: string) => void}) {
+  const handleInputChange = (event:ChangeEvent<HTMLInputElement>) => {
     setNewFolderName(event.target.value);
   };
 

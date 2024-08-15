@@ -31,7 +31,7 @@ export const FolderHierachyTable = ({data}:FolderHierachyTableProps) => {
         </div>
         <div className='rounded-b-lg overflow-hidden'>
         {
-            data?.map((item:any) => 
+            data?.map((item:FolderItem) => 
                 <div key={item.name}>
                     <hr></hr>
                     <div className='bg-gray-800 hover:bg-gray-700 grid grid-cols-2 p-4 cursor-pointer'>

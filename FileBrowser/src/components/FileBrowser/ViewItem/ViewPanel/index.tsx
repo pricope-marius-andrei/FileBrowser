@@ -1,5 +1,5 @@
 import { TabPanel } from '@headlessui/react'
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 import { FolderHierachyTable } from '../FolderHierarchyTable';
 

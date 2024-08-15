@@ -6,8 +6,15 @@ import { getActiveItem } from "../../../../utils/treeNavigation";
 import ActionsPopover from "../../../ActionsPopover";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../state/store";
+import { FileSystemItem } from "../../../../types/FileBrowserTypes";
 
-export const Folder = ({name, path, items }: any) => {
+interface FolderProps {
+  name: string;
+  path: string;
+  items: FileSystemItem[];
+}
+
+export const Folder = ({name, path, items }: FolderProps) => {
   const { setActivePath, setCurrentItem } = useContext(FileBrowserContext);
   const reduxFileBrowserData = useSelector((state:RootState) => state.fileBrowser);
   
@@ -39,7 +46,7 @@ export const Folder = ({name, path, items }: any) => {
           )}
 
           <DisclosurePanel className="ml-4">
-            {items.map((element: any) => {
+            {items.map((element: FileSystemItem) => {
               return element.kind === "folder" ? (
                 <Folder
                   key={element.path}

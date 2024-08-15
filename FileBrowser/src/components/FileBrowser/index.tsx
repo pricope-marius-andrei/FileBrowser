@@ -2,17 +2,21 @@ import { FileBrowserContext } from '../../contexts/fileBrowserContext'
 import { TreeView } from './TreeView'
 import {useEffect, useState } from 'react'
 import { ViewItem } from './ViewItem'
-import { getActiveItem, openPath } from '../../utils/treeNavigation'
+import { getActiveItem } from '../../utils/treeNavigation'
+import { FileSystemItem } from '../../types/FileBrowserTypes'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../state/store'
 
 export const FileBrowser = () => {
-    const [activePath, setActivePath] = useState('root/public');
-    const [currentItem, setCurrentItem] = useState({});
-
+    const reduxFileBrowserData = useSelector((state:RootState) => state.fileBrowser);
+    const [activePath, setActivePath] = useState<string>('root/public');
+    const [currentItem, setCurrentItem] = useState<FileSystemItem>({} as FileSystemItem);
 
     useEffect(() => {
-      const fileBrowserData = JSON.parse(localStorage.getItem("fileBrowserData"));
-        setCurrentItem(getActiveItem(fileBrowserData, activePath));
-        // setActivePath(currentItem.path);
+      const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
+      const fileBrowserData = localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData as string) : reduxFileBrowserData ;
+      const activeItem = getActiveItem(fileBrowserData, activePath) as FileSystemItem;
+      setCurrentItem(activeItem);
     }, [activePath]);
     
   return (

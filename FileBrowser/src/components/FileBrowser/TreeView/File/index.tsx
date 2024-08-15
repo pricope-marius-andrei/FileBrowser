@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../state/store";
 import FileActionsPopover from "../../../ActionsPopover/FileActionsPopover";
 
-export const File = ({name, path}:any) => {
+export const File = ({name, path}:{name: string, path: string }) => {
     const [showActionsPopover, setShowActionsPopover] = useState(false);
     const {setActivePath, setCurrentItem} = useContext(FileBrowserContext);
 

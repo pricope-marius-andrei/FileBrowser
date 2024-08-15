@@ -6,7 +6,12 @@ import NewFolderModal from '../FileBrowser/TreeView/Folder/NewFolderModal';
 import { useDispatch } from 'react-redux';
 import { deleteItem } from '../../state/fileBrowserSlice';
 
-export default function ActionsPopover({setShowActionsPopover , path}:any) {
+interface ActionsPopoverProps {
+  setShowActionsPopover: (value: boolean) => void;
+  path: string;
+}
+
+export default function ActionsPopover({setShowActionsPopover , path}:ActionsPopoverProps) {
   const dispatch = useDispatch();
  const [showNewFileModal, setShowNewFileModal] = useState(false);
  const [showNewFolderModal, setShowNewFolderModal] = useState(false);
@@ -19,7 +24,7 @@ export default function ActionsPopover({setShowActionsPopover , path}:any) {
   return (
     <Popover
            onMouseEnter={() => setShowActionsPopover(true)}
-          // onMouseLeave={() => {console.log('here');setShowActionsPopover(false)}}
+          // onMouseLeave={() => {setShowActionsPopover(false)}}
            className="absolute flex flex-col -translate-x-full -translate-y-2/3 gap-1"
          >
            <Popover.Panel

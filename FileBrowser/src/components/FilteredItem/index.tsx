@@ -1,21 +1,14 @@
-import { Transition } from "@headlessui/react";
 import { useState } from "react";
 import { openPath } from "../../utils/treeNavigation";
+import { FileSystemItem } from "../../types/FileBrowserTypes";
 
 
 
-export const FilteredItem = ({data}:any) => {
+export const FilteredItem = ({data}:{data:FileSystemItem}) => {
   const [showActionsPopover, setShowActionsPopover] = useState(false);
   const currentPath:string = data.path;
-  // const reduxFileBrowserData = useSelector((state:RootState) => state.fileBrowser);
-  // const localStorageFileBrowserData = localStorage.getItem("fileBrowserData");
-  // const fileBrowserData =  localStorageFileBrowserData ? JSON.parse(localStorageFileBrowserData) : reduxFileBrowserData;
-  
-  
-  // const {setActivePath, setCurrentItem} = useContext(FileBrowserContext);
 
   const handleClickItem = () => {
-      // const treeViewRoot = document.getElementById('treeViewRoot');
       openPath(currentPath);
   }
 
@@ -26,7 +19,7 @@ export const FilteredItem = ({data}:any) => {
         onClick={handleClickItem}
     >
         <div className="cursor-pointer w-64 relative p-2 bg-gray-700 hover:bg-slate-500">
-            {data.isFolder  ? '📁' : '📄'} {data.name}
+            {data.kind==='folder'  ? '📁' : '📄'} {data.name}
         </div>
         {
             showActionsPopover &&

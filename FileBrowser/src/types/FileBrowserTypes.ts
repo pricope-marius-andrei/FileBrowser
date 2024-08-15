@@ -4,9 +4,12 @@ export interface BaseItem {
     kind: "file" | "folder";
 }
 
+export type FileTypes = 'TXT' | 'JSON' | 'PNG';
+
+
 export interface FileItem extends BaseItem {
     kind: "file";
-    type: "TXT" | "JSON" | "PNG";
+    type: FileTypes;
     content?: string; 
 }
 

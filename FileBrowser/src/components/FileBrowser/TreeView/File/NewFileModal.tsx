@@ -1,15 +1,15 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import { Fragment, useContext, useState } from 'react'
+import { ChangeEvent, Fragment, useContext, useState } from 'react'
 
-export default function NewFileModal({isOpen, setIsOpen}) {
+export default function NewFileModal({isOpen, setIsOpen}:{isOpen:boolean, setIsOpen: (value: boolean) => void}) {
   const dispatch = useDispatch();
   const {activePath,setActivePath} = useContext(FileBrowserContext);
   const [newFileName, setNewFileName] = useState('');
-  const [newFileType, setNewFileType] = useState('TXT');
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [newFileType, setNewFileType] = useState<FileTypes>('TXT');
+  const [uploadedFile, setUploadedFile] = useState('');
 
 function handleCreateNewFile() {
-  uploadedFile && localStorage.setItem(activePath + '/' + newFileName, uploadedFile);
+  if(uploadedFile) localStorage.setItem(activePath + '/' + newFileName, uploadedFile);
 
   dispatch(addItem({ 
     activePath, 
@@ -83,12 +83,18 @@ function closeModal() {
 }
 
 
-import { Radio, RadioGroup } from '@headlessui/react'
+import { RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
 const types = ['TXT','JSON', 'PNG']
 
-function SelectNewFileType({ newFileType, setNewFileType, setUploadedFile }) {
+interface SelectNewFileTypeProps {
+  newFileType: FileTypes;
+  setNewFileType: (value: FileTypes) => void;
+  setUploadedFile: (value: string) => void;
+}
+
+function SelectNewFileType({ newFileType, setNewFileType, setUploadedFile }:SelectNewFileTypeProps) {
 
   return (
     <div className="w-full px-4">
@@ -120,14 +126,20 @@ function SelectNewFileType({ newFileType, setNewFileType, setUploadedFile }) {
   );
 }
 
-import { Description, Field, Input, Label } from '@headlessui/react'
+import { Field, Input } from '@headlessui/react'
 import clsx from 'clsx'
 import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../../../state/fileBrowserSlice';
+import { FileTypes } from '../../../../types/FileBrowserTypes';
 
-function NameInput({newFileName, setNewFileName}) {
-  const handleInputChange = (event) => {
+interface NameInputProps {
+  newFileName: string;
+  setNewFileName: (value: string) => void;
+}
+
+function NameInput({newFileName, setNewFileName}:NameInputProps) {
+  const handleInputChange = (event:ChangeEvent<HTMLInputElement>) => {
     setNewFileName(event.target.value);
   };
 
@@ -150,16 +162,19 @@ function NameInput({newFileName, setNewFileName}) {
 }
 
 
-function UploadImageInput({ setUploadedFile }) {
-  function handleFileUpload(event) {
-    const file = event.target.files[0]; 
+function UploadImageInput({ setUploadedFile }:{setUploadedFile: (value: string) => void}) {
+  function handleFileUpload(event: ChangeEvent<HTMLInputElement>) {
+    let file = {} as File;
+    if (event.target.files) file = event.target.files[0];
 
     if (file) {
       const reader = new FileReader();
       
       reader.onload = () => {
         const base64Image = reader.result;
-        setUploadedFile(base64Image); 
+        if (typeof base64Image === 'string') {
+          setUploadedFile(base64Image);
+        }
       };
 
       reader.readAsDataURL(file); 
