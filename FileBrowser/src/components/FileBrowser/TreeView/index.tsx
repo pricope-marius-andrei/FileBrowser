@@ -5,17 +5,25 @@ import { FileSystemItem } from "../../../types/FileBrowserTypes";
 import { RootState } from "../../../state/store";
 import data from "../../../data/data.json"
 import SearchBar from "./SearchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FilteredItem } from "../../FilteredItem";
 
 export const TreeView = () => {
     const fileBrowserData = useSelector((state:RootState) => state.fileBrowser);
     const [filteredData, setFilteredData] = useState([]);
+    const [data, setData] = useState(fileBrowserData);
 
     if(localStorage.getItem("fileBrowserData") === null)
     {
         localStorage.setItem("fileBrowserData", JSON.stringify(data));
     }
+
+    useEffect(() => {
+        // setData(filteredData);
+        console.log("Filtered Data: ");
+        console.log(filteredData);
+    },[filteredData]);
+    
     return (
         <div className="mr-10">
             <SearchBar rawData={fileBrowserData} setFilteredData={setFilteredData}/>

@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FolderItem } from '../../../../types/FileBrowserTypes';
-import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
+
+import Dictaphone from '../../../Dictaphone';
 
 
 const flattenFileSystem = (data:any) => {
@@ -21,14 +22,24 @@ const flattenFileSystem = (data:any) => {
 export default function SearchBar({rawData, setFilteredData}:any) {
     const [searchQuery, setSearchQuery] = useState('');
     const rawFlattenedData = flattenFileSystem(rawData);
-    const [flattenedData, setFlattenedData] = useState(flattenFileSystem(rawData));
-    const {setActivePath, setCurrentItem} = useContext(FileBrowserContext);
+   
 
     useEffect(() => {
         if(searchQuery !== '') {
-            setFlattenedData(rawFlattenedData.filter((item:any) => 
+            const flattenedData = rawFlattenedData.filter((item:any) => 
                 
-            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ))             
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()));             
+    
+                setFilteredData(flattenedData);
+        }
+    }, [searchQuery]);
+
+    const handleSearch = (query:string) => {
+        setSearchQuery(query);
+        if(query !== '') {
+            const flattenedData = rawFlattenedData.filter((item:any) => 
+                
+            item.name.toLowerCase().includes(query.toLowerCase()));             
 
             setFilteredData(flattenedData);
         }
@@ -36,17 +47,20 @@ export default function SearchBar({rawData, setFilteredData}:any) {
         {
             setFilteredData([]);
             // setActivePath('');
-            setCurrentItem({});
+            // setCurrentItem({});
         }
-    },[searchQuery])
+    }
 
   return (
-    <input 
-        type="text" 
-        placeholder="Search..." 
-        value={searchQuery} 
-        onChange={(e) => {setSearchQuery(e.target.value);}} 
-        className="border bg-slate-900 p-2 mx-3 my-4 w-full rounded-lg text-white"
-    />
+    <div className='flex w-full'>
+        <input 
+            type="text" 
+            placeholder="Search..." 
+            value={searchQuery} 
+            onChange={(e) => handleSearch(e.target.value)} 
+            className="border bg-slate-900 p-2 mx-3 my-4 w-full rounded-lg text-white"
+        />
+        <Dictaphone searchCallback={setSearchQuery}/>
+    </div>
   )
 }
