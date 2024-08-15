@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'
-import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 import { useDispatch } from 'react-redux';
+import { FileBrowserContext } from '../../../../contexts/fileBrowserContext';
 import { addItem } from '../../../../state/fileBrowserSlice';
 import { NameInput } from './NameInput';
 

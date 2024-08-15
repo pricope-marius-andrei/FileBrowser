@@ -51,7 +51,6 @@ const Dictaphone = ({searchCallback}:DictaphoneProps) => {
   return (
     <div className='flex items-center'>
       <Button className="h-fit p-2 rounded-full hover:bg-slate-600" onClick={handleListingStatus}>{listening ? '🔴':'🎤'}</Button>
-      <p>{transcript}</p>
     </div>
   );
 };

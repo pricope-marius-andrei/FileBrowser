@@ -23,12 +23,12 @@ export const openPath = async (path: string) => {
     return;
   }
 
-  const firstButton: HTMLButtonElement | undefined = Array.from(currentElement.querySelectorAll('button'))
+  let firstButton: HTMLButtonElement | undefined = Array.from(currentElement.querySelectorAll('button'))
     .find((btn:HTMLButtonElement) => btn.textContent?.includes(segments[0]));
 
 
   if (firstButton && firstButton.getAttribute('data-headlessui-state') === 'open') {
-      firstButton.click();
+      await firstButton.click();
   }
 
 
