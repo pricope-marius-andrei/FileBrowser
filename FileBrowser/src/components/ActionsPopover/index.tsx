@@ -3,8 +3,7 @@ import { useContext, useState } from "react";
 import { FileBrowserContext } from '../../contexts/fileBrowserContext';
 import NewFileModal from '../FileBrowser/TreeView/File/NewFileModal';
 import NewFolderModal from '../FileBrowser/TreeView/Folder/NewFolderModal';
-import { useDispatch } from 'react-redux';
-import { deleteItem } from '../../state/fileBrowserSlice';
+import ConfirmDeleteModal from '../Modals/ConfirmDeleteModal';
 
 interface ActionsPopoverProps {
   setShowActionsPopover: (value: boolean) => void;
@@ -12,15 +11,11 @@ interface ActionsPopoverProps {
 }
 
 export default function ActionsPopover({setShowActionsPopover , path}:ActionsPopoverProps) {
-  const dispatch = useDispatch();
  const [showNewFileModal, setShowNewFileModal] = useState(false);
  const [showNewFolderModal, setShowNewFolderModal] = useState(false);
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const {setActivePath} = useContext(FileBrowserContext);
 
-  const handleDeleteFolder = () => {
-    dispatch(deleteItem({path}))
-    setActivePath(path.split("/").slice(0, -1).join("/"));
-  }
   return (
     <Popover
            onMouseEnter={() => setShowActionsPopover(true)}
@@ -48,9 +43,10 @@ export default function ActionsPopover({setShowActionsPopover , path}:ActionsPop
            <PopoverPanel
              static
              className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
-             onClick={()=>handleDeleteFolder()}
+             onClick={()=>setShowConfirmDeleteModal(true)}
            >
             ➜🗑️
+            {showConfirmDeleteModal && (<ConfirmDeleteModal showConfirmDeleteModal={showConfirmDeleteModal} setShowConfirmDeleteModal={setShowConfirmDeleteModal} path={path}/>)}
            </PopoverPanel>
          </Popover>
   );

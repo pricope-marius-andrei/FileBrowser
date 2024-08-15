@@ -1,8 +1,7 @@
 import { Popover, PopoverPanel } from '@headlessui/react';
-import {  useContext } from "react";
+import { useContext, useState } from "react";
+import ConfirmDeleteModal from '../Modals/ConfirmDeleteModal';
 import { FileBrowserContext } from '../../contexts/fileBrowserContext';
-import { useDispatch } from 'react-redux';
-import { deleteItem } from '../../state/fileBrowserSlice';
 
 interface FileActionsPopoverProps {
   setShowActionsPopover: (value: boolean) => void;
@@ -10,17 +9,9 @@ interface FileActionsPopoverProps {
 }
 
 export default function FileActionsPopover({setShowActionsPopover , path}:FileActionsPopoverProps) {
-  const dispatch = useDispatch();
-  const {setActivePath, currentItem} = useContext(FileBrowserContext);
+  const {setActivePath} = useContext(FileBrowserContext);
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
-  const handleDeleteFile = () => {
-    setActivePath(path.split("/").slice(0, -1).join("/"))
-    setShowActionsPopover(false);
-    dispatch(deleteItem({path}));
-
-    if(currentItem.type === 'PNG')
-      localStorage.removeItem(currentItem.path);
-  }
   
   return (
     <Popover
@@ -31,9 +22,10 @@ export default function FileActionsPopover({setShowActionsPopover , path}:FileAc
            <PopoverPanel
              static
              className="relative z-10 text-sm text-black bg-white rounded hover:scale-110 cursor-pointer"
-             onClick={()=>handleDeleteFile()}
+             onClick={()=>{setShowConfirmDeleteModal(true); setActivePath(path)}}
            >
             ➜🗑️
+            {showConfirmDeleteModal && (<ConfirmDeleteModal showConfirmDeleteModal={showConfirmDeleteModal} setShowConfirmDeleteModal={setShowConfirmDeleteModal} path={path}/>)}
            </PopoverPanel>
          </Popover>
   );
